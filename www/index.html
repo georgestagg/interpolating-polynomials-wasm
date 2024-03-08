@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vandermonde Interpolating Polynomial LAPACK Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="info">
+      <div><button id="clear">Reset points</button> <button id="sin">Fit sin()</button></div>
+      <div id="plot"></div>
+      <div id="output">Please wait, downloading Wasm.</div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"></script>
+  <script>
+    var Module = {};
+    Module.onRuntimeInitialized = () => {
+      doStart();
+    };
+    Module.onAbort = () => {
+      doAbort();
+    };
+  </script>
+  <script src="vandermonde.js"></script>
+  <script src="index.js"></script>
+</body>
+
+</html>
