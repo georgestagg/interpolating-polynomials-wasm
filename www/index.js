@@ -18,8 +18,8 @@ function handleTouchStart(evt) {
 function handleMouseDown(evt) {
   var x = evt.offsetX != null ? evt.offsetX : evt.originalEvent.layerX;
   var y = evt.offsetY != null ? evt.offsetY : evt.originalEvent.layerY;
-  mx = 40 * (x - marginLeft) / (width - marginLeft - marginRight) - 20;
-  my = -20 * (y - marginTop) / (height - marginTop - marginBottom) + 10;
+  mx = 20 * (x - marginLeft) / (width - marginLeft - marginRight) - 10;
+  my = -10 * (y - marginTop) / (height - marginTop - marginBottom) + 5;
   points.push({ x: mx, y: my });
   coef = doPolynomial(points);
   drawPlot(mx, my);
@@ -28,8 +28,8 @@ function handleMouseDown(evt) {
 function handleMouseMove(evt) {
   var x = evt.offsetX != null ? evt.offsetX : evt.originalEvent.layerX;
   var y = evt.offsetY != null ? evt.offsetY : evt.originalEvent.layerY;
-  mx = 40 * (x - marginLeft) / (width - marginLeft - marginRight) - 20;
-  my = -20 * (y - marginTop) / (height - marginTop - marginBottom) + 10;
+  mx = 20 * (x - marginLeft) / (width - marginLeft - marginRight) - 10;
+  my = -10 * (y - marginTop) / (height - marginTop - marginBottom) + 5;
   drawPlot(mx, my);
 }
 
@@ -57,7 +57,7 @@ function reset() {
 }
 
 function resetSin() {
-  const xDomain = Array.from({ length: 26 }, (_, i) => -12 + i);
+  const xDomain = Array.from({ length: 26 }, (_, i) => -6 + i/2.);
   points = xDomain.map((x) => {
     return { x, y: Math.sin(x) };
   })
@@ -102,7 +102,7 @@ function drawPlot(mx, my) {
   output.innerHTML = "Polynomial coefficients:\n";
   output.innerHTML += Array.from(coef).map((v) => v.toPrecision(2)).join(" ");
 
-  const xDomain = Array.from({ length: 401 }, (_, i) => -20 + i / 10.);
+  const xDomain = Array.from({ length: 401 }, (_, i) => -10 + i / 20.);
   const line = xDomain.map((x) => {
     let y = 0;
     for (let p = 0; p < coef.length; p++) {
@@ -120,8 +120,8 @@ function drawPlot(mx, my) {
     marginBottom,
     width,
     height,
-    x: { domain: [-20, 20] },
-    y: { domain: [-10, 10] },
+    x: { domain: [-10, 10] },
+    y: { domain: [-5, 5] },
     marks: [
       Plot.text(['Polynomial Interpolation'], { frameAnchor: "Top", dy: -25 }),
       Plot.dot(points, { x: "x", y: "y" }),
