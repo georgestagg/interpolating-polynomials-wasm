@@ -2,12 +2,19 @@ SUBROUTINE vandermonde(A, B, N)
     IMPLICIT NONE
     DOUBLE PRECISION, INTENT(IN) :: A(N, N)
     DOUBLE PRECISION, INTENT(INOUT) :: B(N, 1)
-    DOUBLE PRECISION, ALLOCATABLE :: WORK(:)
     INTEGER, INTENT(IN) :: N
-    INTEGER :: INFO
+    DOUBLE PRECISION, ALLOCATABLE :: WORK(:)
+    INTEGER :: INFO, LWORK
     EXTERNAL :: DGELS
 
-    ALLOCATE(WORK(8 * N))
-    call DGELS('N', N, N, 1, A, N, B, N, WORK, 8 * N, INFO)
+    ! Workspace query
+    ALLOCATE(WORK(1))
+    call DGELS('N', N, N, 1, A, N, B, N, WORK, -1, INFO)
+    LWORK = WORK(1)
+    DEALLOCATE(WORK)
+
+    ! Solve linear system
+    ALLOCATE(WORK(LWORK))
+    call DGELS('N', N, N, 1, A, N, B, N, WORK, LWORK, INFO)
     DEALLOCATE(WORK)
 END
