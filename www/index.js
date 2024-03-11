@@ -57,7 +57,7 @@ function reset() {
 }
 
 function resetSin() {
-  const xDomain = Array.from({ length: 26 }, (_, i) => -6 + i/2.);
+  const xDomain = Array.from({ length: 15 }, (_, i) => -7 + i);
   points = xDomain.map((x) => {
     return { x, y: Math.sin(x) };
   })
