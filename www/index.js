@@ -13,13 +13,22 @@ const plot = document.getElementById("plot");
 // Mouse and touch controls
 function handleTouchStart(evt) {
   evt.preventDefault();
+  var rect = plot.getBoundingClientRect();
+  console.log(rect);
+  var x = width * (evt.touches[0].clientX - rect.left) / rect.width;
+  var y = height * (evt.touches[0].clientY - rect.top) / rect.height;
+  const mx = 20 * (x - marginLeft) / (width - marginLeft - marginRight) - 10;
+  const my = -10 * (y - marginTop) / (height - marginTop - marginBottom) + 5;
+  points.push({ x: mx, y: my });
+  coef = doPolynomial(points);
+  drawPlot(mx, my);
 }
 
 function handleMouseDown(evt) {
   var x = evt.offsetX != null ? evt.offsetX : evt.originalEvent.layerX;
   var y = evt.offsetY != null ? evt.offsetY : evt.originalEvent.layerY;
-  mx = 20 * (x - marginLeft) / (width - marginLeft - marginRight) - 10;
-  my = -10 * (y - marginTop) / (height - marginTop - marginBottom) + 5;
+  const mx = 20 * (x - marginLeft) / (width - marginLeft - marginRight) - 10;
+  const my = -10 * (y - marginTop) / (height - marginTop - marginBottom) + 5;
   points.push({ x: mx, y: my });
   coef = doPolynomial(points);
   drawPlot(mx, my);
